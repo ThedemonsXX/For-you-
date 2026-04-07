@@ -147,6 +147,10 @@
       "Rah ghalta 😭💔"
     ];
     let index = 0;
+    function updateTextPosition() {
+  let move = (yesScale - 1) * 20; // adjust strength here
+  text.style.transform = "translateY(-" + move + "px)";
+}
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
