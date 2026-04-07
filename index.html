@@ -100,12 +100,19 @@
     window.addEventListener("resize", resizeCanvas);
 
     noBtn.onclick = () => {
-      scale += 0.3;
-      noBtn.style.transform = "scale(" + scale + ")";
-      text.style.transform = "translateY(-" + (scale * 10) + "px)";
-      text.innerText = messages[index % messages.length];
-      index++;
-    };
+  scale += 0.3;
+  noBtn.style.transform = "scale(" + scale + ")";
+
+  text.style.transform = "translateY(-" + (scale * 10) + "px)";
+  text.innerText = messages[index % messages.length];
+  index++;
+
+  gif.style.opacity = "0";
+  gif.style.transform = "scale(0.8)";
+  setTimeout(() => {
+    gif.style.display = "none";
+  }, 500);
+};
 
     yesBtn.onclick = () => {
   text.innerText = "🥳 Mabrouuuuk!! 🥳";
