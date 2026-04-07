@@ -161,14 +161,22 @@
     window.addEventListener("resize", resizeCanvas);
 
     noBtn.onclick = () => {
-      noScale -= 0.15;
-      yesScale += 0.18;
+  noScale -= 0.15;
+  yesScale += 0.18;
 
-      if (noScale <= 0) {
-        noBtn.style.display = "none";
-      } else {
-        noBtn.style.transform = "scale(" + noScale + ")";
-      }
+  if (noScale <= 0) {
+    noBtn.style.display = "none";
+  } else {
+    noBtn.style.transform = "scale(" + noScale + ")";
+  }
+
+  yesBtn.style.transform = "scale(" + yesScale + ")";
+
+  text.innerText = messages[index % messages.length];
+  index++;
+
+  updateTextPosition(); // 👈 NEW
+};
 
       yesBtn.style.transform = "scale(" + yesScale + ")";
       text.innerText = messages[index % messages.length];
@@ -176,10 +184,17 @@
     };
 
     yesBtn.onclick = () => {
-      text.innerText = "🥳 Mabrouuuuk!! 🥳";
-      yesScale += 0.2;
-      yesBtn.style.transform = "scale(" + yesScale + ")";
+  text.innerText = "🥳 Mabrouuuuk!! 🥳";
 
+  yesScale += 0.2;
+  yesBtn.style.transform = "scale(" + yesScale + ")";
+
+  container.classList.add("yes-mode");
+
+  updateTextPosition(); // 👈 NEW
+
+  startCelebration();
+};
       container.classList.add("yes-mode");
       startCelebration();
     };
