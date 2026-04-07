@@ -113,7 +113,7 @@
   <div class="container" id="container">
     <img
       id="loveGif"
-      src="Love.gif"
+      src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUycmtrbWg1enUweXJkNGY5NWs3enFnMDA2Z3U5dWF1ZXptbWt0ZXVqaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ytu2GUYbvhz7zShGwS/giphy.gif"
       alt="Love GIF"
     >
 
@@ -147,10 +147,6 @@
       "Rah ghalta 😭💔"
     ];
     let index = 0;
-    function updateTextPosition() {
-  let move = (yesScale - 1) * 20; // adjust strength here
-  text.style.transform = "translateY(-" + move + "px)";
-}
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -161,22 +157,14 @@
     window.addEventListener("resize", resizeCanvas);
 
     noBtn.onclick = () => {
-  noScale -= 0.15;
-  yesScale += 0.18;
+      noScale -= 0.15;
+      yesScale += 0.18;
 
-  if (noScale <= 0) {
-    noBtn.style.display = "none";
-  } else {
-    noBtn.style.transform = "scale(" + noScale + ")";
-  }
-
-  yesBtn.style.transform = "scale(" + yesScale + ")";
-
-  text.innerText = messages[index % messages.length];
-  index++;
-
-  updateTextPosition(); // 👈 NEW
-};
+      if (noScale <= 0) {
+        noBtn.style.display = "none";
+      } else {
+        noBtn.style.transform = "scale(" + noScale + ")";
+      }
 
       yesBtn.style.transform = "scale(" + yesScale + ")";
       text.innerText = messages[index % messages.length];
@@ -184,17 +172,10 @@
     };
 
     yesBtn.onclick = () => {
-  text.innerText = "🥳 Mabrouuuuk!! 🥳";
+      text.innerText = "🥳 Mabrouuuuk!! 🥳";
+      yesScale += 0.2;
+      yesBtn.style.transform = "scale(" + yesScale + ")";
 
-  yesScale += 0.2;
-  yesBtn.style.transform = "scale(" + yesScale + ")";
-
-  container.classList.add("yes-mode");
-
-  updateTextPosition(); // 👈 NEW
-
-  startCelebration();
-};
       container.classList.add("yes-mode");
       startCelebration();
     };
