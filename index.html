@@ -18,6 +18,13 @@
       overflow: hidden;
     }
 
+    #loveGif {
+      display: none;
+      width: 220px;
+      margin-bottom: 20px;
+      border-radius: 20px;
+    }
+
     h1 {
       color: white;
       margin-bottom: 40px;
@@ -58,9 +65,8 @@
   </style>
 </head>
 <body>
-<img id="loveGif"
-     src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUycmtrbWg1enUweXJkNGY5NWs3enFnMDA2Z3U5dWF1ZXptbWt0ZXVqaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ytu2GUYbvhz7zShGwS/giphy.gif"
-     style="display:none; width:220px; margin-bottom:20px; border-radius:20px;">
+
+  <img id="loveGif" src="love.gif" alt="Love GIF">
 
   <h1 id="text">T9ebli tzewji biya? 💍🥺</h1>
 
@@ -72,10 +78,10 @@
   <canvas id="confetti"></canvas>
 
   <script>
-    const gif = document.getElementById("loveGif");
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
     const text = document.getElementById("text");
+    const gif = document.getElementById("loveGif");
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
 
@@ -100,32 +106,24 @@
     window.addEventListener("resize", resizeCanvas);
 
     noBtn.onclick = () => {
-  scale += 0.3;
-  noBtn.style.transform = "scale(" + scale + ")";
+      scale += 0.3;
+      noBtn.style.transform = "scale(" + scale + ")";
+      text.style.transform = "translateY(-" + (scale * 10) + "px)";
+      text.innerText = messages[index % messages.length];
+      index++;
 
-  text.style.transform = "translateY(-" + (scale * 10) + "px)";
-  text.innerText = messages[index % messages.length];
-  index++;
-
-  gif.style.opacity = "0";
-  gif.style.transform = "scale(0.8)";
-  setTimeout(() => {
-    gif.style.display = "none";
-  }, 500);
-};
+      gif.style.display = "none";
+    };
 
     yesBtn.onclick = () => {
-  text.innerText = "🥳 Mabrouuuuk!! 🥳";
-  text.style.transform = "translateY(0)";
+      text.innerText = "🥳 Mabrouuuuk!! 🥳";
+      text.style.transform = "translateY(0)";
+      scale = 1;
+      noBtn.style.transform = "scale(1)";
+      gif.style.display = "block";
 
-  scale = 1;
-  noBtn.style.transform = "scale(1)";
-
-  // 👇 show GIF
-  gif.style.display = "block";
-
-  startCelebration();
-};
+      startCelebration();
+    };
 
     function drawHeart(x, y, size, alpha) {
       ctx.save();
