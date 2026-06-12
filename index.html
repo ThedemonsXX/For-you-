@@ -1,296 +1,448 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proposal Click Only 😈</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondamentaux du Digital - OFPPT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CONFIGURATION GÉNÉRALE & FORMAT SLIDE (16:9 widescreen) */
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f0f2f5;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px 0;
+        }
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            font-family: 'Lato', sans-serif;
+            border-radius: 12px;
+            page-break-after: always; /* Force la coupure propre lors de l'export PDF */
+        }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      width: 90%;
-      max-width: 500px;
-      position: relative;
-      z-index: 2;
-    }
+        /* PALETTE DE COULEURS OFPPT */
+        :root {
+            --ofppt-blue: #003366;
+            --ofppt-cyan: #00AEEF;
+            --text-dark: #1e293b;
+            --text-gray: #475569;
+            --accent-bg: #f8fafc;
+        }
 
-    .top-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 24px;
-      transition: transform 0.3s ease;
-      position: relative;
-      z-index: 10;
-    }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; margin: 0; }
+        p { line-height: 1.6; color: var(--text-gray); font-size: 18px; }
 
-    #loveGif {
-      display: none;
-      width: 180px;
-      max-width: 70vw;
-      border-radius: 20px;
-    }
+        /* ENTÊTE DE DIAPOSITIVE */
+        .slide-title {
+            font-size: 40px;
+            color: var(--ofppt-blue);
+            margin: 40px 60px 20px;
+            border-left: 8px solid var(--ofppt-cyan);
+            padding-left: 20px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
 
-    h1 {
-      color: white;
-      margin: 0;
-      padding: 0 10px;
-      line-height: 1.3;
-      font-size: 28px;
-    }
+        .content-area {
+            flex-grow: 1;
+            padding: 0 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 30px;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 2;
-    }
+        /* NOTES DU PRÉSENTATEUR (Masquées à l'impression standard, lisez-les dans le code ou configurez-les) */
+        .speaker-notes {
+            display: none;
+        }
 
-    .btn {
-      padding: 15px 30px;
-      border: none;
-      border-radius: 15px;
-      font-size: 20px;
-      cursor: pointer;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
+        /* STRUCTURES DE MISE EN PAGE */
+        .title-slide {
+            background: linear-gradient(rgba(0, 51, 102, 0.88), rgba(0, 51, 102, 0.88)), url('http://googleusercontent.com/image_collection/image_retrieval/11914729834255097481');
+            background-size: cover;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        .title-slide h1 { font-size: 64px; margin-bottom: 10px; color: white; line-height: 1.2; }
+        .title-slide .subtitle { font-size: 28px; color: var(--ofppt-cyan); margin-bottom: 50px; font-weight: 600; }
+        .title-slide .authors { font-size: 18px; line-height: 1.8; background: rgba(255,255,255,0.05); padding: 20px 40px; border-radius: 8px; }
+        .logo-ofppt { width: 160px; margin-bottom: 30px; filter: brightness(0) invert(1); }
 
-    #yes {
-      background: #28c76f;
-      color: white;
-      position: relative;
-      z-index: 3;
-    }
+        .section-title-layout {
+            background-color: var(--ofppt-blue);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .section-title-layout h2 { font-size: 64px; color: var(--ofppt-cyan); text-transform: uppercase; }
+        .section-title-layout hr { width: 120px; border: 3px solid white; margin: 30px 0; }
 
-    #no {
-      background: #ea5455;
-      color: white;
-    }
+        .two-column { display: flex; gap: 50px; align-items: center; height: 100%; }
+        .image-wrapper { flex: 1; height: 450px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .text-side { flex: 1; }
 
-    .yes-mode #loveGif {
-      display: block;
-    }
+        .bleed-image-layout { display: grid; grid-template-columns: 1.11fr 0.89fr; padding: 0 !important; align-items: start; }
+        .bleed-text-side { padding: 60px; display: flex; flex-direction: column; justify-content: center; height: 720px; }
+        .bleed-image-side { height: 720px; width: 100%; object-fit: cover; }
 
-    .yes-mode #no {
-      display: none;
-    }
+        .tiled-content { display: flex; gap: 24px; width: 100%; }
+        .tile { flex: 1; background: var(--accent-bg); padding: 30px; border-radius: 15px; border-top: 5px solid var(--ofppt-cyan); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .tile .icon { font-size: 40px; color: var(--ofppt-blue); margin-bottom: 20px; }
+        .tile h3 { font-size: 22px; color: var(--ofppt-blue); margin-bottom: 15px; }
 
-    canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
+        .keyword { color: var(--ofppt-cyan); font-weight: 700; }
+        .footer-line { position: absolute; bottom: 0; left: 0; width: 100%; height: 10px; background: linear-gradient(to right, var(--ofppt-blue), var(--ofppt-cyan)); }
 
-    @media (max-width: 600px) {
-      .top-content {
-        gap: 10px;
-        margin-bottom: 18px;
-      }
+        .styled-bullets { list-style: none; padding: 0; }
+        .styled-bullets li { margin-bottom: 20px; padding-left: 40px; position: relative; font-size: 20px; color: var(--text-dark); }
+        .styled-bullets li::before { content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--ofppt-cyan); }
 
-      h1 {
-        font-size: 24px;
-      }
-
-      .btn {
-        font-size: 18px;
-        padding: 13px 24px;
-      }
-
-      #loveGif {
-        width: 150px;
-      }
-    }
-  </style>
+        /* OPTIMISATION POUR L'IMPRESSION / EXPORT PDF */
+        @media print {
+            body { background-color: #fff; padding: 0; gap: 0; }
+            .slide-container { box-shadow: none; border-radius: 0; margin: 0; page-break-inside: avoid; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container" id="container">
-    <div class="top-content" id="topContent">
-      <img
-        id="loveGif"
-        src="Love.gif"
-        alt="Love GIF"
-      >
-
-      <h1 id="text">T9ebli tzewji biya? 💍🥺</h1>
+<div class="slide-container title-slide" id="slide1">
+    <img src="http://googleusercontent.com/image_collection/image_retrieval/4845159875226362727" alt="Logo OFPPT" class="logo-ofppt">
+    <h1>Identifier les fondamentaux du digital</h1>
+    <p class="subtitle">Chapitre 1 : Introduction à l'informatique</p>
+    <div class="authors">
+        <p><strong>Réalisé par :</strong> Souhaib Djedaini | Soufiane Moslih | Taha Yassin Ejjalty</p>
+        <p><strong>Encadré par :</strong> Mme Safae Laasri</p>
     </div>
-
-    <div class="buttons">
-      <button class="btn" id="yes">AH 😍</button>
-      <button class="btn" id="no">LA 😏</button>
+    <div class="footer-line"></div>
+    <div class="speaker-notes">
+        NOTES : Présenter l'équipe. Poser une question d'accroche : "Qu'est-ce que l'informatique pour vous ?"
     </div>
-  </div>
+</div>
 
-  <canvas id="confetti"></canvas>
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">Qu'est-ce que le digital ?</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="text-side">
+                <p>Le <span class="keyword">digital</span> englobe les technologies numériques qui permettent de traiter, stocker et transférer des données de manière électronique.</p>
+                <p>Dans notre vie quotidienne et professionnelle, il se traduit par :</p>
+                <ul class="styled-bullets">
+                    <li>Une communication instantanée globale.</li>
+                    <li>L'accès direct et illimité à l'information.</li>
+                    <li>L'automatisation des tâches répétitives.</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/1225714972032635372" alt="Technologies digitales">
+            </div>
+        </div>
+    </div>
+    <div class="footer-line"></div>
+    <div class="speaker-notes">
+        NOTES : Mettre en avant que le digital façonne le marché de l'emploi actuel.
+    </div>
+</div>
 
-  <script>
-    const container = document.getElementById("container");
-    const topContent = document.getElementById("topContent");
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
-    const text = document.getElementById("text");
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">Logique de fonctionnement</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fas fa-keyboard"></i></div>
+                <h3>Entrée (Input)</h3>
+                <p>Réception des commandes de l'utilisateur (clavier, souris, micro).</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fas fa-microchip"></i></div>
+                <h3>Traitement</h3>
+                <p>Calculs, analyses et exécution des requêtes par le système.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fas fa-save"></i></div>
+                <h3>Stockage</h3>
+                <p>Conservation des données à court ou long terme.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fas fa-desktop"></i></div>
+                <h3>Sortie (Output)</h3>
+                <p>Restitution du résultat final (affichage écran, impression).</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-line"></div>
+    <div class="speaker-notes">
+        NOTES : Expliquer que n'importe quelle action informatique suit ce cycle fondamental.
+    </div>
+</div>
 
-    let noScale = 1;
-    let yesScale = 1;
-    let animationRunning = false;
+<div class="slide-container section-title-layout" id="slide4">
+    <hr>
+    <h2>Les Composants Matériels</h2>
+    <h3>(Hardware)</h3>
+    <p>Étude détaillée de l'architecture physique d'un ordinateur</p>
+    <div class="speaker-notes">
+        NOTES : Préciser que le "Hardware" désigne tout ce qui est palpable physiquement.
+    </div>
+</div>
 
-    let messages = [
-      "Wesh met2akda? 😏",
-      "Wesh bsa7? 😳",
-      "Fakri 3awdi 😂",
-      "Zidi fakri 😭",
-      "Rah ghalta 😭💔"
-    ];
-    let index = 0;
+<div class="slide-container bleed-image-layout" id="slide5">
+    <div class="bleed-text-side">
+        <h2 class="slide-title" style="margin:0 0 20px 0;">Le Processeur (CPU)</h2>
+        <div class="tile">
+            <div class="icon"><i class="fas fa-brain"></i></div>
+            <p><strong>Définition :</strong> Le processeur est l'unité centrale de traitement de l'ordinateur.</p>
+            <p><strong>Rôle :</strong> Il interprète et exécute les instructions des logiciels et coordonne les flux de données.</p>
+            <p><strong>Exemple :</strong> C'est lui qui calcule la trajectoire dans un jeu ou applique un filtre sur une photo.</p>
+        </div>
+    </div>
+    <img src="http://googleusercontent.com/image_collection/image_retrieval/6324522677756017880" class="bleed-image-side" alt="Processeur CPU Réel">
+    <div class="speaker-notes">
+        NOTES : Analogie du cerveau humain ou du chef d'orchestre. Citer Intel et AMD.
+    </div>
+</div>
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+<div class="slide-container bleed-image-layout" id="slide6">
+    <div class="bleed-text-side">
+        <h2 class="slide-title" style="margin:0 0 20px 0;">La Mémoire Vive (RAM)</h2>
+        <div class="tile">
+            <div class="icon"><i class="fas fa-bolt"></i></div>
+            <p><strong>Définition :</strong> Une mémoire d'accès rapide et volatile (s'efface à l'extinction).</p>
+            <p><strong>Rôle :</strong> Stocker temporairement les fichiers et données essentiels aux applications en cours d'exécution.</p>
+            <p><strong>Exemple :</strong> Plus vous avez de RAM, plus vous pouvez ouvrir d'onglets de navigation web en même temps.</p>
+        </div>
+    </div>
+    <img src="http://googleusercontent.com/image_collection/image_retrieval/8661364325481691774" class="bleed-image-side" alt="Barrette de mémoire RAM">
+    <div class="speaker-notes">
+        NOTES : Faire l'analogie avec la taille d'un bureau de travail (espace disponible immédiat).
+    </div>
+</div>
 
-    function updateTopPosition() {
-      let move = (yesScale - 1) * 35;
-      topContent.style.transform = "translateY(-" + move + "px)";
-    }
+<div class="slide-container bleed-image-layout" id="slide7">
+    <div class="bleed-text-side">
+        <h2 class="slide-title" style="margin:0 0 20px 0;">Disque Dur (HDD)</h2>
+        <div class="tile">
+            <div class="icon"><i class="fas fa-compact-disc"></i></div>
+            <p><strong>Définition :</strong> Support de stockage de masse magnétique traditionnel.</p>
+            <p><strong>Rôle :</strong> Conserver de grands volumes de données de manière permanente (fichiers, système d'exploitation).</p>
+            <p><strong>Exemple :</strong> Parfait pour archiver des dossiers volumineux, des films ou des sauvegardes complètes.</p>
+        </div>
+    </div>
+    <img src="http://googleusercontent.com/image_collection/image_retrieval/3488825857001349949" class="bleed-image-side" alt="Disque dur mécanique HDD">
+    <div class="speaker-notes">
+        NOTES : Expliquer la présence de pièces mécaniques (plateaux tournants), ce qui le rend sensible aux chocs.
+    </div>
+</div>
 
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+<div class="slide-container bleed-image-layout" id="slide8">
+    <div class="bleed-text-side">
+        <h2 class="slide-title" style="margin:0 0 20px 0;">Le Disque SSD</h2>
+        <div class="tile">
+            <div class="icon"><i class="fas fa-rocket"></i></div>
+            <p><strong>Définition :</strong> Stockage à mémoire flash, sans aucun élément mécanique.</p>
+            <p><strong>Rôle :</strong> Assurer le stockage permanent avec des vitesses de lecture et d'écriture extrêmement élevées.</p>
+            <p><strong>Exemple :</strong> Permet d'allumer l'ordinateur et de charger les lourds logiciels de programmation en quelques secondes.</p>
+        </div>
+    </div>
+    <img src="http://googleusercontent.com/image_collection/image_retrieval/13720438798582166958" class="bleed-image-side" alt="Disque SSD moderne">
+    <div class="speaker-notes">
+        NOTES : SSD = Solid State Drive. Expliquer pourquoi il remplace progressivement le HDD pour le système principal.
+    </div>
+</div>
 
-    noBtn.onclick = () => {
-      noScale -= 0.15;
-      yesScale += 0.18;
+<div class="slide-container bleed-image-layout" id="slide9">
+    <div class="bleed-text-side">
+        <h2 class="slide-title" style="margin:0 0 20px 0;">La Carte Mère</h2>
+        <div class="tile">
+            <div class="icon"><i class="fas fa-project-diagram"></i></div>
+            <p><strong>Définition :</strong> Le circuit imprimé principal du PC.</p>
+            <p><strong>Rôle :</strong> Centraliser et connecter tous les composants entre eux afin qu'ils puissent échanger des informations.</p>
+            <p><strong>Exemple :</strong> C'est le socle sur lequel viennent s'emboîter le CPU, la RAM, les disques et les cartes d'extension.</p>
+        </div>
+    </div>
+    <img src="http://googleusercontent.com/image_collection/image_retrieval/17415695338435159882" class="bleed-image-side" alt="Carte mère d'ordinateur">
+    <div class="speaker-notes">
+        NOTES : C'est le système nerveux de la machine. Sa connectique détermine l'évolution future du matériel.
+    </div>
+</div>
 
-      if (noScale <= 0) {
-        noBtn.style.opacity = "0";
-        noBtn.style.transform = "scale(0)";
-        setTimeout(() => {
-          noBtn.style.display = "none";
-        }, 300);
-      } else {
-        noBtn.style.transform = "scale(" + noScale + ")";
-      }
+<div class="slide-container bleed-image-layout" id="slide10">
+    <div class="bleed-text-side">
+        <h2 class="slide-title" style="margin:0 0 20px 0;">Carte Graphique (GPU)</h2>
+        <div class="tile">
+            <div class="icon"><i class="fas fa-gamepad"></i></div>
+            <p><strong>Définition :</strong> Circuit spécialisé dans le traitement des calculs d'images et de vidéos.</p>
+            <p><strong>Rôle :</strong> Alléger la charge du processeur en gérant l'affichage 2D/3D sur les moniteurs.</p>
+            <p><strong>Exemple :</strong> Cruciale pour l'exécution fluide de logiciels de modélisation, de montage vidéo ou de jeux.</p>
+        </div>
+    </div>
+    <img src="http://googleusercontent.com/image_collection/image_retrieval/8795616616712000470" class="bleed-image-side" alt="Carte graphique dédiée">
+    <div class="speaker-notes">
+        NOTES : Mentionner les constructeurs Nvidia et AMD. Différencier puce graphique intégrée (bureautique) et carte dédiée.
+    </div>
+</div>
 
-      yesBtn.style.transform = "scale(" + yesScale + ")";
-      text.innerText = messages[index % messages.length];
-      index++;
+<div class="slide-container bleed-image-layout" id="slide11">
+    <div class="bleed-text-side">
+        <h2 class="slide-title" style="margin:0 0 20px 0;">L'Alimentation</h2>
+        <div class="tile">
+            <div class="icon"><i class="fas fa-plug"></i></div>
+            <p><strong>Définition :</strong> Bloc de conversion électrique.</p>
+            <p><strong>Rôle :</strong> Transformer le courant alternatif du secteur (220V) en tensions continues adaptées aux composants.</p>
+            <p><strong>Exemple :</strong> Elle distribue de manière sécurisée les Watts nécessaires au CPU et au GPU pour éviter toute panne.</p>
+        </div>
+    </div>
+    <img src="http://googleusercontent.com/image_collection/image_retrieval/2677342340528339382" class="bleed-image-side" alt="Bloc alimentation PC">
+    <div class="speaker-notes">
+        NOTES : Insister sur l'importance d'une bonne alimentation (certification 80 Plus) pour la survie du matériel.
+    </div>
+</div>
 
-      updateTopPosition();
-    };
+<div class="slide-container" id="slide12">
+    <h2 class="slide-title">Clavier & Souris</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="tile">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/18198954027232142831" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="Clavier d'ordinateur">
+                <h3>Le Clavier</h3>
+                <p><strong>Rôle :</strong> Permet la saisie de texte, de données numériques et l'envoi de commandes via des raccourcis.</p>
+                <p><strong>Usage :</strong> Rédaction de documents, écriture de lignes de code informatique.</p>
+            </div>
+            <div class="tile">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/9580509528860516134" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="Souris ergonomique">
+                <h3>La Souris</h3>
+                <p><strong>Rôle :</strong> Dispositif de pointage facilitant la navigation au sein des interfaces graphiques.</p>
+                <p><strong>Usage :</strong> Sélection, glisser-déposer, navigation fluide sur le web.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-line"></div>
+    <div class="speaker-notes">
+        NOTES : Expliquer que ce sont des périphériques de saisie/entrée fondamentaux.
+    </div>
+</div>
 
-    yesBtn.onclick = () => {
-      text.innerText = "🥳 Mabrouuuuk!! 🥳";
-      yesScale += 0.2;
-      yesBtn.style.transform = "scale(" + yesScale + ")";
+<div class="slide-container" id="slide13">
+    <h2 class="slide-title">Écran & Imprimante</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="tile">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/5523270253843771666" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="Moniteur Écran">
+                <h3>L'Écran (Moniteur)</h3>
+                <p><strong>Rôle :</strong> Traduit les signaux de la carte graphique en images exploitables par l'oeil humain.</p>
+                <p><strong>Usage :</strong> Afficher l'interface de travail, visionner des médias.</p>
+            </div>
+            <div class="tile">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/10113487338056739374" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="Imprimante de bureau">
+                <h3>L'Imprimante</h3>
+                <p><strong>Rôle :</strong> Matérialise les documents numériques en impressions physiques sur papier.</p>
+                <p><strong>Usage :</strong> Sortie de rapports de stage, de contrats ou de schémas techniques.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-line"></div>
+    <div class="speaker-notes">
+        NOTES : Ce sont des périphériques de sortie. Faire la distinction avec les périphériques d'entrée vus juste avant.
+    </div>
+</div>
 
-      container.classList.add("yes-mode");
-      updateTopPosition();
-      startCelebration();
-    };
+<div class="slide-container" id="slide14">
+    <h2 class="slide-title">Les Logiciels (Software)</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="text-side">
+                <p>Le <span class="keyword">Software</span> représente l'intelligence de la machine. Sans lui, le matériel reste inerte.</p>
+                <div class="tile" style="margin-top:20px;">
+                    <h3>1. Système d'Exploitation (OS)</h3>
+                    <p>La couche logicielle de base (Windows, macOS, Linux) qui orchestre le matériel et l'interface utilisateur.</p>
+                </div>
+                <div class="tile" style="margin-top:20px;">
+                    <h3>2. Les Applications</h3>
+                    <p>Programmes dédiés à des métiers ou tâches spécifiques (Ex: VS Code, Photoshop, Excel).</p>
+                </div>
+            </div>
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/1425187328464253728" alt="Développement de logiciels">
+            </div>
+        </div>
+    </div>
+    <div class="footer-line"></div>
+    <div class="speaker-notes">
+        NOTES : Analogie : Le Hardware est le corps, le Software est l'esprit de l'ordinateur.
+    </div>
+</div>
 
-    function drawHeart(x, y, size, alpha) {
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.bezierCurveTo(x, y - size / 2, x - size, y - size / 2, x - size, y);
-      ctx.bezierCurveTo(x - size, y + size / 2, x, y + size, x, y + size * 1.2);
-      ctx.bezierCurveTo(x, y + size, x + size, y + size / 2, x + size, y);
-      ctx.bezierCurveTo(x + size, y - size / 2, x, y - size / 2, x, y);
-      ctx.fillStyle = "#ff2d55";
-      ctx.fill();
-      ctx.restore();
-    }
+<div class="slide-container" id="slide15">
+    <h2 class="slide-title">Réseaux & Internet</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/7629901076730917366" alt="Routeur et infrastructure réseau">
+            </div>
+            <div class="text-side">
+                <ul class="styled-bullets">
+                    <li><span class="keyword">Réseau informatique :</span> Interconnexion d'appareils pour partager des fichiers et ressources.</li>
+                    <li><span class="keyword">Internet :</span> Le réseau des réseaux interconnectés à l'échelle mondiale.</li>
+                    <li><span class="keyword">Routeur :</span> Équipement guidant les paquets de données d'un réseau à un autre (comme votre Box Internet).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-line"></div>
+    <div class="speaker-notes">
+        NOTES : Souligner l'omniprésence du Cloud et des architectures réseaux dans le digital.
+    </div>
+</div>
 
-    function startCelebration() {
-      if (animationRunning) return;
-      animationRunning = true;
+<div class="slide-container" id="slide16">
+    <h2 class="slide-title">Synthèse des fondamentaux</h2>
+    <div class="content-area">
+        <div class="tile" style="text-align:center; padding:40px 20px;">
+            <p style="font-size:24px; color:var(--text-dark);">L'informatique repose sur la synergie de deux mondes :</p>
+            <h3 style="font-size:44px; color:var(--ofppt-blue); margin:20px 0;">HARDWARE + SOFTWARE</h3>
+            <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center; margin-top:25px;">
+                <span style="background:var(--ofppt-cyan); color:white; padding:12px 24px; border-radius:30px; font-weight:bold; font-size:16px;">PROCESSEUR</span>
+                <span style="background:var(--ofppt-cyan); color:white; padding:12px 24px; border-radius:30px; font-weight:bold; font-size:16px;">MÉMOIRE VIVE</span>
+                <span style="background:var(--ofppt-cyan); color:white; padding:12px 24px; border-radius:30px; font-weight:bold; font-size:16px;">STOCKAGE (SSD)</span>
+                <span style="background:var(--ofppt-cyan); color:white; padding:12px 24px; border-radius:30px; font-weight:bold; font-size:16px;">SYSTEME D'EXPLOITATION</span>
+            </div>
+            <p style="margin-top:40px; font-style:italic; font-size:18px;">"Comprendre ces briques physiques et applicatives est la première étape de votre parcours digital."</p>
+        </div>
+    </div>
+    <div class="footer-line"></div>
+    <div class="speaker-notes">
+        NOTES : Faire participer la classe en demandant un résumé rapide de la différence entre RAM et SSD.
+    </div>
+</div>
 
-      let confettiPieces = [];
-      let hearts = [];
-
-      for (let i = 0; i < 180; i++) {
-        confettiPieces.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height - canvas.height,
-          size: Math.random() * 8 + 4,
-          speedY: Math.random() * 3 + 2,
-          speedX: (Math.random() - 0.5) * 2,
-          color: "hsl(" + Math.random() * 360 + ", 100%, 50%)"
-        });
-      }
-
-      for (let i = 0; i < 50; i++) {
-        hearts.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 12 + 8,
-          speedX: (Math.random() - 0.5) * 8,
-          speedY: -(Math.random() * 4 + 2),
-          alpha: 1
-        });
-      }
-
-      let frames = 0;
-      const maxFrames = 300;
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        confettiPieces.forEach(p => {
-          ctx.fillStyle = p.color;
-          ctx.fillRect(p.x, p.y, p.size, p.size);
-          p.x += p.speedX;
-          p.y += p.speedY;
-
-          if (p.y > canvas.height) {
-            p.y = -10;
-            p.x = Math.random() * canvas.width;
-          }
-        });
-
-        hearts.forEach(h => {
-          drawHeart(h.x, h.y, h.size, h.alpha);
-          h.x += h.speedX;
-          h.y += h.speedY;
-          h.alpha -= 0.015;
-        });
-
-        hearts = hearts.filter(h => h.alpha > 0);
-
-        frames++;
-        if (frames < maxFrames) {
-          requestAnimationFrame(animate);
-        } else {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          animationRunning = false;
-        }
-      }
-
-      animate();
-    }
-  </script>
+<div class="slide-container" id="slide17" style="background-color: var(--ofppt-blue); color:white; justify-content:center; align-items:center; text-align:center;">
+    <h2 style="font-size:72px; color:var(--ofppt-cyan); font-weight:700;">Avez-vous des questions ?</h2>
+    <p style="font-size:26px; color:white; margin-top:20px;">Merci pour votre attention !</p>
+    <div style="margin-top:60px; opacity:0.7; font-size:16px;">
+        <p>Présentation Académique - Formation Spécialisée OFPPT</p>
+        <p>Année de Formation : 2026</p>
+    </div>
+</div>
 
 </body>
 </html>
