@@ -3,446 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fondamentaux du Digital - OFPPT</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Chapitre 1 : Identifier les fondamentaux du digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/simple.min.css" id="theme">
     <style>
-        /* CONFIGURATION GÉNÉRALE & FORMAT SLIDE (16:9 widescreen) */
-        * { box-sizing: border-box; }
-        body {
-            background-color: #f0f2f5;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            padding: 40px 0;
+        /* Styles personnalisés pour améliorer le design */
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: #2c3e50;
+            text-transform: none;
         }
-
-        .slide-container {
-            width: 1280px;
-            height: 720px;
-            background-color: #ffffff;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            font-family: 'Lato', sans-serif;
-            border-radius: 12px;
-            page-break-after: always; /* Force la coupure propre lors de l'export PDF */
+        .reveal .slide-content {
+            text-align: left;
         }
-
-        /* PALETTE DE COULEURS OFPPT */
-        :root {
-            --ofppt-blue: #003366;
-            --ofppt-cyan: #00AEEF;
-            --text-dark: #1e293b;
-            --text-gray: #475569;
-            --accent-bg: #f8fafc;
+        .hardware-img {
+            max-height: 350px !important;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin-top: 20px !important;
         }
-
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; margin: 0; }
-        p { line-height: 1.6; color: var(--text-gray); font-size: 18px; }
-
-        /* ENTÊTE DE DIAPOSITIVE */
-        .slide-title {
-            font-size: 40px;
-            color: var(--ofppt-blue);
-            margin: 40px 60px 20px;
-            border-left: 8px solid var(--ofppt-cyan);
-            padding-left: 20px;
-            text-transform: uppercase;
-            font-weight: 700;
+        .logo-ofppt {
+            max-height: 100px !important;
+            margin-bottom: 20px !important;
+            border: none !important;
+            box-shadow: none !important;
         }
-
-        .content-area {
-            flex-grow: 1;
-            padding: 0 60px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* NOTES DU PRÉSENTATEUR (Masquées à l'impression standard, lisez-les dans le code ou configurez-les) */
-        .speaker-notes {
-            display: none;
-        }
-
-        /* STRUCTURES DE MISE EN PAGE */
-        .title-slide {
-            background: linear-gradient(rgba(0, 51, 102, 0.88), rgba(0, 51, 102, 0.88)), url('http://googleusercontent.com/image_collection/image_retrieval/11914729834255097481');
-            background-size: cover;
-            background-position: center;
-            justify-content: center;
-            align-items: center;
+        .authors-box {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.7em;
+            margin-top: 30px;
             text-align: center;
-            color: white;
-        }
-        .title-slide h1 { font-size: 64px; margin-bottom: 10px; color: white; line-height: 1.2; }
-        .title-slide .subtitle { font-size: 28px; color: var(--ofppt-cyan); margin-bottom: 50px; font-weight: 600; }
-        .title-slide .authors { font-size: 18px; line-height: 1.8; background: rgba(255,255,255,0.05); padding: 20px 40px; border-radius: 8px; }
-        .logo-ofppt { width: 160px; margin-bottom: 30px; filter: brightness(0) invert(1); }
-
-        .section-title-layout {
-            background-color: var(--ofppt-blue);
-            color: white;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        .section-title-layout h2 { font-size: 64px; color: var(--ofppt-cyan); text-transform: uppercase; }
-        .section-title-layout hr { width: 120px; border: 3px solid white; margin: 30px 0; }
-
-        .two-column { display: flex; gap: 50px; align-items: center; height: 100%; }
-        .image-wrapper { flex: 1; height: 450px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .text-side { flex: 1; }
-
-        .bleed-image-layout { display: grid; grid-template-columns: 1.11fr 0.89fr; padding: 0 !important; align-items: start; }
-        .bleed-text-side { padding: 60px; display: flex; flex-direction: column; justify-content: center; height: 720px; }
-        .bleed-image-side { height: 720px; width: 100%; object-fit: cover; }
-
-        .tiled-content { display: flex; gap: 24px; width: 100%; }
-        .tile { flex: 1; background: var(--accent-bg); padding: 30px; border-radius: 15px; border-top: 5px solid var(--ofppt-cyan); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .tile .icon { font-size: 40px; color: var(--ofppt-blue); margin-bottom: 20px; }
-        .tile h3 { font-size: 22px; color: var(--ofppt-blue); margin-bottom: 15px; }
-
-        .keyword { color: var(--ofppt-cyan); font-weight: 700; }
-        .footer-line { position: absolute; bottom: 0; left: 0; width: 100%; height: 10px; background: linear-gradient(to right, var(--ofppt-blue), var(--ofppt-cyan)); }
-
-        .styled-bullets { list-style: none; padding: 0; }
-        .styled-bullets li { margin-bottom: 20px; padding-left: 40px; position: relative; font-size: 20px; color: var(--text-dark); }
-        .styled-bullets li::before { content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--ofppt-cyan); }
-
-        /* OPTIMISATION POUR L'IMPRESSION / EXPORT PDF */
-        @media print {
-            body { background-color: #fff; padding: 0; gap: 0; }
-            .slide-container { box-shadow: none; border-radius: 0; margin: 0; page-break-inside: avoid; }
         }
     </style>
 </head>
 <body>
 
-<div class="slide-container title-slide" id="slide1">
-    <img src="http://googleusercontent.com/image_collection/image_retrieval/4845159875226362727" alt="Logo OFPPT" class="logo-ofppt">
-    <h1>Identifier les fondamentaux du digital</h1>
-    <p class="subtitle">Chapitre 1 : Introduction à l'informatique</p>
-    <div class="authors">
-        <p><strong>Réalisé par :</strong> Souhaib Djedaini | Soufiane Moslih | Taha Yassin Ejjalty</p>
-        <p><strong>Encadré par :</strong> Mme Safae Laasri</p>
-    </div>
-    <div class="footer-line"></div>
-    <div class="speaker-notes">
-        NOTES : Présenter l'équipe. Poser une question d'accroche : "Qu'est-ce que l'informatique pour vous ?"
-    </div>
-</div>
+<div class="reveal">
+    <div class="slides">
 
-<div class="slide-container" id="slide2">
-    <h2 class="slide-title">Qu'est-ce que le digital ?</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="text-side">
-                <p>Le <span class="keyword">digital</span> englobe les technologies numériques qui permettent de traiter, stocker et transférer des données de manière électronique.</p>
-                <p>Dans notre vie quotidienne et professionnelle, il se traduit par :</p>
-                <ul class="styled-bullets">
-                    <li>Une communication instantanée globale.</li>
-                    <li>L'accès direct et illimité à l'information.</li>
-                    <li>L'automatisation des tâches répétitives.</li>
+        <section data-transition="zoom">
+            <img src="http://googleusercontent.com/image_collection/image_retrieval/10816514750296267528_0" alt="Logo OFPPT" class="logo-ofppt">
+            <h2>Chapitre 1 : Identifier les fondamentaux du digital</h2>
+            <p>Introduction pédagogique aux bases de l'informatique et du numérique — pour débutants.</p>
+            
+            <div class="authors-box fragment fade-up">
+                <p><strong>Réalisé par :</strong> Souhaib Djedaini, Soufiane Moslih, Taha Yassin Ejjalty</p>
+                <p><strong>Encadré par :</strong> Mme Safae Laasri</p>
+            </div>
+
+            <aside class="notes">
+                Bienvenue à tous. Aujourd'hui, nous allons aborder les fondamentaux du digital. N'oubliez pas de vous présenter brièvement ainsi que vos collègues et de remercier Mme Safae Laasri.
+            </aside>
+        </section>
+
+        <section data-transition="slide">
+            <h2>Introduction</h2>
+            <div class="slide-content">
+                <ul>
+                    <li class="fragment fade-right"><strong>Qu'est-ce que le digital ?</strong> Le digital regroupe les outils et services électroniques qui traitent l'information.</li>
+                    <li class="fragment fade-right"><strong>Pourquoi c'est important :</strong> Travail, études, communication et services quotidiens dépendent de l'informatique.</li>
+                    <li class="fragment fade-right"><strong>Objectifs du chapitre :</strong> Comprendre les appareils, composants, logiciels, réseaux et bonnes pratiques de base.</li>
                 </ul>
             </div>
-            <div class="image-wrapper">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/1225714972032635372" alt="Technologies digitales">
-            </div>
-        </div>
-    </div>
-    <div class="footer-line"></div>
-    <div class="speaker-notes">
-        NOTES : Mettre en avant que le digital façonne le marché de l'emploi actuel.
-    </div>
-</div>
+            <aside class="notes">
+                Insistez sur le fait que le digital est partout (téléphones, caisses de supermarché, voitures). L'objectif est de démystifier ces outils.
+            </aside>
+        </section>
 
-<div class="slide-container" id="slide3">
-    <h2 class="slide-title">Logique de fonctionnement</h2>
-    <div class="content-area">
-        <div class="tiled-content">
-            <div class="tile">
-                <div class="icon"><i class="fas fa-keyboard"></i></div>
-                <h3>Entrée (Input)</h3>
-                <p>Réception des commandes de l'utilisateur (clavier, souris, micro).</p>
-            </div>
-            <div class="tile">
-                <div class="icon"><i class="fas fa-microchip"></i></div>
-                <h3>Traitement</h3>
-                <p>Calculs, analyses et exécution des requêtes par le système.</p>
-            </div>
-            <div class="tile">
-                <div class="icon"><i class="fas fa-save"></i></div>
-                <h3>Stockage</h3>
-                <p>Conservation des données à court ou long terme.</p>
-            </div>
-            <div class="tile">
-                <div class="icon"><i class="fas fa-desktop"></i></div>
-                <h3>Sortie (Output)</h3>
-                <p>Restitution du résultat final (affichage écran, impression).</p>
-            </div>
-        </div>
-    </div>
-    <div class="footer-line"></div>
-    <div class="speaker-notes">
-        NOTES : Expliquer que n'importe quelle action informatique suit ce cycle fondamental.
-    </div>
-</div>
+        <section data-transition="convex">
+            <h2>Qu'est-ce qu'un ordinateur ?</h2>
+            <p>Un ordinateur est une machine qui sait :</p>
+            <ul>
+                <li class="fragment fade-up">📥 <strong>Saisir</strong> (Entrée / Input)</li>
+                <li class="fragment fade-up">⚙️ <strong>Traiter</strong> (Processeur / Processing)</li>
+                <li class="fragment fade-up">💾 <strong>Stocker</strong> (Disque, mémoire / Storage)</li>
+                <li class="fragment fade-up">📤 <strong>Restituer</strong> (Écran, imprimante / Output)</li>
+            </ul>
+            <aside class="notes">
+                Donnez l'exemple pédagogique : taper un texte au clavier (entrée), le processeur l'enregistre (traitement), le fichier est sauvegardé (stockage), et on l'imprime (sortie).
+            </aside>
+        </section>
 
-<div class="slide-container section-title-layout" id="slide4">
-    <hr>
-    <h2>Les Composants Matériels</h2>
-    <h3>(Hardware)</h3>
-    <p>Étude détaillée de l'architecture physique d'un ordinateur</p>
-    <div class="speaker-notes">
-        NOTES : Préciser que le "Hardware" désigne tout ce qui est palpable physiquement.
-    </div>
-</div>
-
-<div class="slide-container bleed-image-layout" id="slide5">
-    <div class="bleed-text-side">
-        <h2 class="slide-title" style="margin:0 0 20px 0;">Le Processeur (CPU)</h2>
-        <div class="tile">
-            <div class="icon"><i class="fas fa-brain"></i></div>
-            <p><strong>Définition :</strong> Le processeur est l'unité centrale de traitement de l'ordinateur.</p>
-            <p><strong>Rôle :</strong> Il interprète et exécute les instructions des logiciels et coordonne les flux de données.</p>
-            <p><strong>Exemple :</strong> C'est lui qui calcule la trajectoire dans un jeu ou applique un filtre sur une photo.</p>
-        </div>
-    </div>
-    <img src="http://googleusercontent.com/image_collection/image_retrieval/6324522677756017880" class="bleed-image-side" alt="Processeur CPU Réel">
-    <div class="speaker-notes">
-        NOTES : Analogie du cerveau humain ou du chef d'orchestre. Citer Intel et AMD.
-    </div>
-</div>
-
-<div class="slide-container bleed-image-layout" id="slide6">
-    <div class="bleed-text-side">
-        <h2 class="slide-title" style="margin:0 0 20px 0;">La Mémoire Vive (RAM)</h2>
-        <div class="tile">
-            <div class="icon"><i class="fas fa-bolt"></i></div>
-            <p><strong>Définition :</strong> Une mémoire d'accès rapide et volatile (s'efface à l'extinction).</p>
-            <p><strong>Rôle :</strong> Stocker temporairement les fichiers et données essentiels aux applications en cours d'exécution.</p>
-            <p><strong>Exemple :</strong> Plus vous avez de RAM, plus vous pouvez ouvrir d'onglets de navigation web en même temps.</p>
-        </div>
-    </div>
-    <img src="http://googleusercontent.com/image_collection/image_retrieval/8661364325481691774" class="bleed-image-side" alt="Barrette de mémoire RAM">
-    <div class="speaker-notes">
-        NOTES : Faire l'analogie avec la taille d'un bureau de travail (espace disponible immédiat).
-    </div>
-</div>
-
-<div class="slide-container bleed-image-layout" id="slide7">
-    <div class="bleed-text-side">
-        <h2 class="slide-title" style="margin:0 0 20px 0;">Disque Dur (HDD)</h2>
-        <div class="tile">
-            <div class="icon"><i class="fas fa-compact-disc"></i></div>
-            <p><strong>Définition :</strong> Support de stockage de masse magnétique traditionnel.</p>
-            <p><strong>Rôle :</strong> Conserver de grands volumes de données de manière permanente (fichiers, système d'exploitation).</p>
-            <p><strong>Exemple :</strong> Parfait pour archiver des dossiers volumineux, des films ou des sauvegardes complètes.</p>
-        </div>
-    </div>
-    <img src="http://googleusercontent.com/image_collection/image_retrieval/3488825857001349949" class="bleed-image-side" alt="Disque dur mécanique HDD">
-    <div class="speaker-notes">
-        NOTES : Expliquer la présence de pièces mécaniques (plateaux tournants), ce qui le rend sensible aux chocs.
-    </div>
-</div>
-
-<div class="slide-container bleed-image-layout" id="slide8">
-    <div class="bleed-text-side">
-        <h2 class="slide-title" style="margin:0 0 20px 0;">Le Disque SSD</h2>
-        <div class="tile">
-            <div class="icon"><i class="fas fa-rocket"></i></div>
-            <p><strong>Définition :</strong> Stockage à mémoire flash, sans aucun élément mécanique.</p>
-            <p><strong>Rôle :</strong> Assurer le stockage permanent avec des vitesses de lecture et d'écriture extrêmement élevées.</p>
-            <p><strong>Exemple :</strong> Permet d'allumer l'ordinateur et de charger les lourds logiciels de programmation en quelques secondes.</p>
-        </div>
-    </div>
-    <img src="http://googleusercontent.com/image_collection/image_retrieval/13720438798582166958" class="bleed-image-side" alt="Disque SSD moderne">
-    <div class="speaker-notes">
-        NOTES : SSD = Solid State Drive. Expliquer pourquoi il remplace progressivement le HDD pour le système principal.
-    </div>
-</div>
-
-<div class="slide-container bleed-image-layout" id="slide9">
-    <div class="bleed-text-side">
-        <h2 class="slide-title" style="margin:0 0 20px 0;">La Carte Mère</h2>
-        <div class="tile">
-            <div class="icon"><i class="fas fa-project-diagram"></i></div>
-            <p><strong>Définition :</strong> Le circuit imprimé principal du PC.</p>
-            <p><strong>Rôle :</strong> Centraliser et connecter tous les composants entre eux afin qu'ils puissent échanger des informations.</p>
-            <p><strong>Exemple :</strong> C'est le socle sur lequel viennent s'emboîter le CPU, la RAM, les disques et les cartes d'extension.</p>
-        </div>
-    </div>
-    <img src="http://googleusercontent.com/image_collection/image_retrieval/17415695338435159882" class="bleed-image-side" alt="Carte mère d'ordinateur">
-    <div class="speaker-notes">
-        NOTES : C'est le système nerveux de la machine. Sa connectique détermine l'évolution future du matériel.
-    </div>
-</div>
-
-<div class="slide-container bleed-image-layout" id="slide10">
-    <div class="bleed-text-side">
-        <h2 class="slide-title" style="margin:0 0 20px 0;">Carte Graphique (GPU)</h2>
-        <div class="tile">
-            <div class="icon"><i class="fas fa-gamepad"></i></div>
-            <p><strong>Définition :</strong> Circuit spécialisé dans le traitement des calculs d'images et de vidéos.</p>
-            <p><strong>Rôle :</strong> Alléger la charge du processeur en gérant l'affichage 2D/3D sur les moniteurs.</p>
-            <p><strong>Exemple :</strong> Cruciale pour l'exécution fluide de logiciels de modélisation, de montage vidéo ou de jeux.</p>
-        </div>
-    </div>
-    <img src="http://googleusercontent.com/image_collection/image_retrieval/8795616616712000470" class="bleed-image-side" alt="Carte graphique dédiée">
-    <div class="speaker-notes">
-        NOTES : Mentionner les constructeurs Nvidia et AMD. Différencier puce graphique intégrée (bureautique) et carte dédiée.
-    </div>
-</div>
-
-<div class="slide-container bleed-image-layout" id="slide11">
-    <div class="bleed-text-side">
-        <h2 class="slide-title" style="margin:0 0 20px 0;">L'Alimentation</h2>
-        <div class="tile">
-            <div class="icon"><i class="fas fa-plug"></i></div>
-            <p><strong>Définition :</strong> Bloc de conversion électrique.</p>
-            <p><strong>Rôle :</strong> Transformer le courant alternatif du secteur (220V) en tensions continues adaptées aux composants.</p>
-            <p><strong>Exemple :</strong> Elle distribue de manière sécurisée les Watts nécessaires au CPU et au GPU pour éviter toute panne.</p>
-        </div>
-    </div>
-    <img src="http://googleusercontent.com/image_collection/image_retrieval/2677342340528339382" class="bleed-image-side" alt="Bloc alimentation PC">
-    <div class="speaker-notes">
-        NOTES : Insister sur l'importance d'une bonne alimentation (certification 80 Plus) pour la survie du matériel.
-    </div>
-</div>
-
-<div class="slide-container" id="slide12">
-    <h2 class="slide-title">Clavier & Souris</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="tile">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/18198954027232142831" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="Clavier d'ordinateur">
-                <h3>Le Clavier</h3>
-                <p><strong>Rôle :</strong> Permet la saisie de texte, de données numériques et l'envoi de commandes via des raccourcis.</p>
-                <p><strong>Usage :</strong> Rédaction de documents, écriture de lignes de code informatique.</p>
-            </div>
-            <div class="tile">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/9580509528860516134" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="Souris ergonomique">
-                <h3>La Souris</h3>
-                <p><strong>Rôle :</strong> Dispositif de pointage facilitant la navigation au sein des interfaces graphiques.</p>
-                <p><strong>Usage :</strong> Sélection, glisser-déposer, navigation fluide sur le web.</p>
-            </div>
-        </div>
-    </div>
-    <div class="footer-line"></div>
-    <div class="speaker-notes">
-        NOTES : Expliquer que ce sont des périphériques de saisie/entrée fondamentaux.
-    </div>
-</div>
-
-<div class="slide-container" id="slide13">
-    <h2 class="slide-title">Écran & Imprimante</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="tile">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/5523270253843771666" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="Moniteur Écran">
-                <h3>L'Écran (Moniteur)</h3>
-                <p><strong>Rôle :</strong> Traduit les signaux de la carte graphique en images exploitables par l'oeil humain.</p>
-                <p><strong>Usage :</strong> Afficher l'interface de travail, visionner des médias.</p>
-            </div>
-            <div class="tile">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/10113487338056739374" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:15px;" alt="Imprimante de bureau">
-                <h3>L'Imprimante</h3>
-                <p><strong>Rôle :</strong> Matérialise les documents numériques en impressions physiques sur papier.</p>
-                <p><strong>Usage :</strong> Sortie de rapports de stage, de contrats ou de schémas techniques.</p>
-            </div>
-        </div>
-    </div>
-    <div class="footer-line"></div>
-    <div class="speaker-notes">
-        NOTES : Ce sont des périphériques de sortie. Faire la distinction avec les périphériques d'entrée vus juste avant.
-    </div>
-</div>
-
-<div class="slide-container" id="slide14">
-    <h2 class="slide-title">Les Logiciels (Software)</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="text-side">
-                <p>Le <span class="keyword">Software</span> représente l'intelligence de la machine. Sans lui, le matériel reste inerte.</p>
-                <div class="tile" style="margin-top:20px;">
-                    <h3>1. Système d'Exploitation (OS)</h3>
-                    <p>La couche logicielle de base (Windows, macOS, Linux) qui orchestre le matériel et l'interface utilisateur.</p>
+        <section data-transition="concave">
+            <h2>Matériel (Hardware) vs Logiciel (Software)</h2>
+            <div style="display: flex; gap: 20px;">
+                <div class="fragment fade-right" style="flex: 1; background: #e8f4f8; padding: 20px; border-radius: 10px;">
+                    <h3>Hardware</h3>
+                    <p>Les pièces physiques de l'ordinateur.</p>
                 </div>
-                <div class="tile" style="margin-top:20px;">
-                    <h3>2. Les Applications</h3>
-                    <p>Programmes dédiés à des métiers ou tâches spécifiques (Ex: VS Code, Photoshop, Excel).</p>
+                <div class="fragment fade-left" style="flex: 1; background: #f9ebea; padding: 20px; border-radius: 10px;">
+                    <h3>Software</h3>
+                    <p>Les programmes et applications.</p>
                 </div>
             </div>
-            <div class="image-wrapper">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/1425187328464253728" alt="Développement de logiciels">
+            <p class="fragment fade-up" style="margin-top: 30px;">
+                <em>Le logiciel permet au matériel d'exécuter des tâches. Sans logiciel, le matériel est inerte.</em>
+            </p>
+            <aside class="notes">
+                Utilisez l'analogie : le matériel c'est comme les instruments de musique, le logiciel c'est la partition ou le mode d'emploi.
+            </aside>
+        </section>
+
+        <section data-transition="slide">
+            <h2>Le Processeur (CPU)</h2>
+            <div class="slide-content">
+                <p>Le <strong>« cerveau »</strong> de l'ordinateur qui exécute les tâches et traite l'information.</p>
+                <div style="text-align: center;">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/13449909490244683849_0" alt="CPU réel" class="hardware-img fragment zoom-in">
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="footer-line"></div>
-    <div class="speaker-notes">
-        NOTES : Analogie : Le Hardware est le corps, le Software est l'esprit de l'ordinateur.
+            <aside class="notes">
+                Expliquez que c'est lui qui fait tous les calculs mathématiques. Plus il est puissant, plus l'ordinateur réfléchit vite.
+            </aside>
+        </section>
+
+        <section data-transition="slide">
+            <h2>La Mémoire Vive (RAM)</h2>
+            <div class="slide-content">
+                <p>Elle <strong>temporise les données</strong> lors du travail. C'est la mémoire à court terme.</p>
+                <div style="text-align: center;">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/9385020917603882053_0" alt="RAM réelle" class="hardware-img fragment zoom-in">
+                </div>
+            </div>
+            <aside class="notes">
+                Astuce à dire à l'oral : Plus de RAM rend l'ordinateur plus réactif quand on ouvre beaucoup de fenêtres ou d'onglets sur Internet.
+            </aside>
+        </section>
+
+        <section data-transition="slide">
+            <h2>Le Stockage (SSD / HDD)</h2>
+            <div class="slide-content">
+                <p>Assure le <strong>stockage permanent</strong> de vos fichiers, photos et programmes.</p>
+                <div style="text-align: center;">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/18409040962161033026_0" alt="SSD réel" class="hardware-img fragment zoom-in">
+                </div>
+            </div>
+            <aside class="notes">
+                Précisez qu'un SSD est beaucoup plus rapide qu'un ancien disque dur (HDD). Si on éteint le PC, les données restent ici (contrairement à la RAM).
+            </aside>
+        </section>
+
+        <section data-transition="slide">
+            <h2>La Carte Mère</h2>
+            <div class="slide-content">
+                <p>Le grand circuit imprimé qui <strong>connecte tous les composants</strong> entre eux.</p>
+                <div style="text-align: center;">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/13621427611602160694_0" alt="Carte Mère réelle" class="hardware-img fragment zoom-in">
+                </div>
+            </div>
+            <aside class="notes">
+                C'est la colonne vertébrale. CPU, RAM, SSD et périphériques (souris, écran) se branchent tous dessus.
+            </aside>
+        </section>
+
+        <section data-transition="zoom">
+            <h2>La Communication et les Réseaux</h2>
+            <ul>
+                <li class="fragment fade-right"><strong>Réseau :</strong> Ensemble d'appareils reliés pour échanger des données.</li>
+                <li class="fragment fade-right"><strong>Internet :</strong> Le réseau mondial de communication.</li>
+                <li class="fragment fade-right"><strong>Wi-Fi :</strong> Connexion sans fil.</li>
+                <li class="fragment fade-right"><strong>Routeur :</strong> Appareil qui distribue la connexion.</li>
+            </ul>
+            <div class="fragment fade-up" style="margin-top: 20px; padding: 10px; border-left: 5px solid #f1c40f; background: #fff8e1;">
+                ⚠️ <strong>Sécurité :</strong> Ne partagez pas vos mots de passe et utilisez des réseaux fiables. Maintenez vos systèmes à jour !
+            </div>
+            <aside class="notes">
+                Rappelez les gestes simples de sécurité : éviter les liens inconnus, utiliser un code ou une empreinte sur son smartphone.
+            </aside>
+        </section>
+
+        <section data-transition="slide">
+            <h2>Résumé et Conclusion</h2>
+            <p>Les ordinateurs saisissent, traitent, stockent et restituent l'information.</p>
+            <p>Ils combinent le <strong>matériel (Hardware)</strong> et le <strong>logiciel (Software)</strong>, et communiquent via des <strong>réseaux</strong>.</p>
+            
+            <h3 class="fragment fade-up" style="margin-top: 30px;">Questions rapides :</h3>
+            <ul>
+                <li class="fragment fade-up">Quelles sont les 4 fonctions d'un ordinateur ?</li>
+                <li class="fragment fade-up">Quelle est la différence entre RAM et SSD ?</li>
+            </ul>
+            <p class="fragment fade-up" style="color: #27ae60; font-weight: bold; margin-top: 20px;">
+                Merci de votre attention ! Avez-vous des questions ?
+            </p>
+            <aside class="notes">
+                Félicitez l'auditoire. Laissez un moment de silence pour voir si quelqu'un a des questions. Pour aller plus loin : proposez-leur de pratiquer en rentrant.
+            </aside>
+        </section>
+
     </div>
 </div>
 
-<div class="slide-container" id="slide15">
-    <h2 class="slide-title">Réseaux & Internet</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="image-wrapper">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/7629901076730917366" alt="Routeur et infrastructure réseau">
-            </div>
-            <div class="text-side">
-                <ul class="styled-bullets">
-                    <li><span class="keyword">Réseau informatique :</span> Interconnexion d'appareils pour partager des fichiers et ressources.</li>
-                    <li><span class="keyword">Internet :</span> Le réseau des réseaux interconnectés à l'échelle mondiale.</li>
-                    <li><span class="keyword">Routeur :</span> Équipement guidant les paquets de données d'un réseau à un autre (comme votre Box Internet).</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-line"></div>
-    <div class="speaker-notes">
-        NOTES : Souligner l'omniprésence du Cloud et des architectures réseaux dans le digital.
-    </div>
-</div>
-
-<div class="slide-container" id="slide16">
-    <h2 class="slide-title">Synthèse des fondamentaux</h2>
-    <div class="content-area">
-        <div class="tile" style="text-align:center; padding:40px 20px;">
-            <p style="font-size:24px; color:var(--text-dark);">L'informatique repose sur la synergie de deux mondes :</p>
-            <h3 style="font-size:44px; color:var(--ofppt-blue); margin:20px 0;">HARDWARE + SOFTWARE</h3>
-            <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center; margin-top:25px;">
-                <span style="background:var(--ofppt-cyan); color:white; padding:12px 24px; border-radius:30px; font-weight:bold; font-size:16px;">PROCESSEUR</span>
-                <span style="background:var(--ofppt-cyan); color:white; padding:12px 24px; border-radius:30px; font-weight:bold; font-size:16px;">MÉMOIRE VIVE</span>
-                <span style="background:var(--ofppt-cyan); color:white; padding:12px 24px; border-radius:30px; font-weight:bold; font-size:16px;">STOCKAGE (SSD)</span>
-                <span style="background:var(--ofppt-cyan); color:white; padding:12px 24px; border-radius:30px; font-weight:bold; font-size:16px;">SYSTEME D'EXPLOITATION</span>
-            </div>
-            <p style="margin-top:40px; font-style:italic; font-size:18px;">"Comprendre ces briques physiques et applicatives est la première étape de votre parcours digital."</p>
-        </div>
-    </div>
-    <div class="footer-line"></div>
-    <div class="speaker-notes">
-        NOTES : Faire participer la classe en demandant un résumé rapide de la différence entre RAM et SSD.
-    </div>
-</div>
-
-<div class="slide-container" id="slide17" style="background-color: var(--ofppt-blue); color:white; justify-content:center; align-items:center; text-align:center;">
-    <h2 style="font-size:72px; color:var(--ofppt-cyan); font-weight:700;">Avez-vous des questions ?</h2>
-    <p style="font-size:26px; color:white; margin-top:20px;">Merci pour votre attention !</p>
-    <div style="margin-top:60px; opacity:0.7; font-size:16px;">
-        <p>Présentation Académique - Formation Spécialisée OFPPT</p>
-        <p>Année de Formation : 2026</p>
-    </div>
-</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"></script>
+<script>
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+        transition: 'slide', // Transitions par défaut (slide, convex, concave, zoom)
+        plugins: [ RevealNotes ] // Active le plugin pour les notes du présentateur
+    });
+</script>
 
 </body>
 </html>
