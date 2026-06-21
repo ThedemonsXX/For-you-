@@ -1,252 +1,325 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chapitre 1 : Les fondamentaux du digital</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected Heart - Shifted</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght=700&family=Plus+Jakarta+Sans:wght=400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Configuration de la page pour le PDF (A4 Paysage) */
-        @page {
-            size: A4 landscape;
+        :root {
+            --bg-dark: #060105;
+            --bg-glow: #1a0412;
+            --primary-love: #ff2a5f;
+            --primary-glow: rgba(255, 42, 95, 0.8);
+            --text-light: #fff0f5;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e0e0e0;
-            -webkit-print-color-adjust: exact; /* Force l'impression des couleurs de fond */
-            color: #333;
-        }
-
-        /* Chaque slide est une page A4 stricte */
-        .slide {
-            width: 297mm;
-            height: 210mm;
-            background: #ffffff;
-            margin: 0 auto 20px auto; /* Marge pour la visualisation web */
-            padding: 40px 60px;
-            box-sizing: border-box;
-            position: relative;
-            page-break-after: always; /* Force iLovePDF à créer une nouvelle page ici */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Ombre visible uniquement sur le web */
+            background: radial-gradient(circle at center, var(--bg-glow) 0%, var(--bg-dark) 100%);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
             justify-content: center;
+            align-items: center;
+            padding: 10px;
         }
 
-        /* Supprime l'ombre lors de la conversion PDF */
-        @media print {
-            body { background-color: #ffffff; }
-            .slide { margin: 0; box-shadow: none; border: none; }
-        }
-
-        /* Typographie */
-        h1 { color: #2c3e50; font-size: 42px; text-align: center; margin-bottom: 10px; }
-        h2 { color: #2980b9; font-size: 36px; border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 30px; }
-        h3 { color: #16a085; font-size: 28px; }
-        p, li { font-size: 24px; line-height: 1.6; }
-        ul { padding-left: 40px; }
-        li { margin-bottom: 15px; }
-
-        /* Mise en page de la première slide */
-        .title-slide { text-align: center; align-items: center; }
-        .logo-ofppt { max-height: 120px; margin-bottom: 30px; }
-        .authors-box {
-            background-color: #f8f9fa;
-            border-left: 6px solid #2980b9;
-            padding: 20px;
-            margin-top: 40px;
-            width: 80%;
-            border-radius: 8px;
-            text-align: left;
-        }
-
-        /* Grilles pour le contenu et les images */
-        .grid-2 { display: flex; gap: 40px; align-items: center; }
-        .grid-2 > div { flex: 1; }
-        
-        .hardware-img {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            object-fit: cover;
-        }
-
-        /* Note de bas de page ou présentateur */
-        .footer-note {
+        /* Interactive Canvas Background */
+        #particle-canvas {
             position: absolute;
-            bottom: 20px;
-            left: 60px;
-            right: 60px;
-            font-size: 14px;
-            color: #7f8c8d;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-            text-align: right;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Main Display Arena - Lifted slightly with a bottom margin */
+        #heart-viewport {
+            position: relative;
+            width: 100vmin; 
+            height: 100vmin;
+            max-width: 680px;
+            max-height: 680px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            margin-bottom: 6vh; /* Shifts the heart up a little bit */
+        }
+
+        /* Connecting Laser/Glow Lines */
+        #svg-network {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart-line {
+            stroke: var(--primary-love);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            opacity: 0.45;
+            filter: drop-shadow(0 0 4px var(--primary-love));
+            stroke-dasharray: 10 5;
+            animation: energyFlow 1.5s infinite linear;
+        }
+
+        @keyframes energyFlow {
+            to { stroke-dashoffset: -15; }
+        }
+
+        /* Ambient Pulse Waves behind Her Name */
+        .pulse-wave {
+            position: absolute;
+            width: clamp(140px, 30vmin, 220px);
+            height: clamp(65px, 13vmin, 90px);
+            border-radius: 60px;
+            background: transparent;
+            border: 2px solid var(--primary-love);
+            box-shadow: 0 0 20px var(--primary-glow);
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
+            animation: ripple 3s infinite cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+        .pulse-wave:nth-child(2) { animation-delay: 1s; }
+        .pulse-wave:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes ripple {
+            0% { transform: scale(0.8); opacity: 0.5; filter: blur(0px); }
+            100% { transform: scale(1.6); opacity: 0; filter: blur(4px); }
+        }
+
+        /* Center Core Node */
+        .center-core {
+            position: absolute;
+            z-index: 10;
+            background: linear-gradient(135deg, #ff2a5f 0%, #ff5e62 100%);
+            padding: clamp(12px, 2.5vmin, 22px) clamp(25px, 5vmin, 45px);
+            border-radius: 50px;
+            box-shadow: 0 0 35px var(--primary-glow), 
+                        inset 0 4px 12px rgba(255, 255, 255, 0.4);
+            animation: structuralBeat 1.4s infinite alternate cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-align: center;
+        }
+
+        /* THE TARGET LABEL FOR HER NAME */
+        .her-name-label {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.8rem, 5vmin, 2.8rem);
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+
+        @keyframes structuralBeat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.04); box-shadow: 0 0 45px rgba(255, 42, 95, 1); }
+        }
+
+        /* Premium Glassmorphism Emotion Cards */
+        .emotion-card {
+            position: absolute;
+            z-index: 5;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            padding: clamp(6px, 1.5vmin, 12px) clamp(12px, 2.8vmin, 22px);
+            border-radius: 20px;
+            font-size: clamp(0.7rem, 1.8vmin, 0.95rem);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transform: translate(-50%, -50%);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: floatingFloat 5s infinite alternate ease-in-out;
+            white-space: nowrap;
+        }
+
+        .emotion-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(to bottom, rgba(255,42,95,0.4), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .emotion-card:hover {
+            background: rgba(255, 42, 95, 0.18);
+            border-color: rgba(255, 42, 95, 0.5);
+            box-shadow: 0 0 20px rgba(255, 42, 95, 0.4);
+            color: #ffffff;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .emotion-card:nth-child(even) { animation-duration: 4s; animation-delay: 0.5s; }
+        .emotion-card:nth-child(3n) { animation-duration: 6s; animation-delay: 0.2s; }
+
+        @keyframes floatingFloat {
+            0% { transform: translate(-50%, -50%) translateY(0px); }
+            100% { transform: translate(-50%, -50%) translateY(-6px); }
+        }
+
+        @media (max-width: 500px) {
+            .emotion-card.edge-left { left: 10% !important; }
+            .emotion-card.edge-right { left: 90% !important; }
+            .emotion-card.top-left { left: 28% !important; top: 20% !important; }
+            .emotion-card.top-right { left: 72% !important; top: 20% !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SLIDE 1 : Titre -->
-    <div class="slide title-slide">
-        <img src="http://googleusercontent.com/image_collection/image_retrieval/10816514750296267528_0" alt="Logo OFPPT" class="logo-ofppt">
-        <h1>Chapitre 1 : Identifier les fondamentaux du digital</h1>
-        <p style="color: #7f8c8d; font-size: 28px;">Introduction pédagogique aux bases de l'informatique</p>
+    <canvas id="particle-canvas"></canvas>
+
+    <div id="heart-viewport">
+        <div class="pulse-wave"></div>
+        <div class="pulse-wave"></div>
+        <div class="pulse-wave"></div>
+
+        <svg id="svg-network"></svg>
+
+        <div class="center-core" id="anchor-core">
+            <p class="her-name-label">Nisrine</p>
+        </div>
+
+        <div class="emotion-card" style="left: 50%; top: 27%;">Safe</div>
+        <div class="emotion-card top-left" style="left: 32%; top: 18%;">Comfortable</div>
+        <div class="emotion-card" style="left: 16%; top: 32%;">Adored</div>
+        <div class="emotion-card edge-left" style="left: 13%; top: 52%;">Peaceful</div>
+        <div class="emotion-card" style="left: 26%; top: 74%;">Inspired</div>
         
-        <div class="authors-box">
-            <p><strong>Réalisé par :</strong> Souhaib Djedaini, Soufiane Moslih, Taha Yassin Ejjalty</p>
-            <p><strong>Encadré par :</strong> Mme Safae Laasri</p>
-        </div>
-        <div class="footer-note">Slide 1 / 10</div>
+        <div class="emotion-card" style="left: 50%; top: 92%;">Complete</div>
+        
+        <div class="emotion-card" style="left: 74%; top: 74%;">Cherished</div>
+        <div class="emotion-card edge-right" style="left: 87%; top: 52%;">Understood</div>
+        <div class="emotion-card" style="left: 84%; top: 32%;">Warmth</div>
+        <div class="emotion-card top-right" style="left: 68%; top: 18%;">Protected</div>
     </div>
 
-    <!-- SLIDE 2 : Introduction -->
-    <div class="slide">
-        <h2>Introduction</h2>
-        <ul>
-            <li><strong>Qu'est-ce que le digital ?</strong> Le digital regroupe les outils et services électroniques qui traitent l'information.</li>
-            <li><strong>Pourquoi c'est important :</strong> Le travail, les études, la communication et les services du quotidien dépendent tous de l'informatique aujourd'hui.</li>
-            <li><strong>Objectifs du chapitre :</strong> Comprendre les appareils, les composants matériels, les logiciels, les réseaux et les bonnes pratiques de base.</li>
-        </ul>
-        <div class="footer-note">Slide 2 / 10</div>
-    </div>
+    <script>
+        const viewport = document.getElementById('heart-viewport');
+        const svg = document.getElementById('svg-network');
+        const anchorCore = document.getElementById('anchor-core');
+        const cards = document.querySelectorAll('.emotion-card');
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
 
-    <!-- SLIDE 3 : Description d'un ordinateur -->
-    <div class="slide">
-        <h2>Qu'est-ce qu'un ordinateur ?</h2>
-        <p>Un ordinateur est une machine complète qui réalise quatre grandes fonctions :</p>
-        <div class="grid-2">
-            <div>
-                <ul>
-                    <li>📥 <strong>Saisir (Entrée) :</strong> Envoyer des données via un clavier, une souris ou un micro.</li>
-                    <li>⚙️ <strong>Traiter (Processeur) :</strong> Calculer et exécuter les instructions demandées.</li>
-                    <li>💾 <strong>Stocker (Mémoire) :</strong> Enregistrer les fichiers sur un disque.</li>
-                    <li>📤 <strong>Restituer (Sortie) :</strong> Afficher le résultat sur un écran ou via une imprimante.</li>
-                </ul>
-            </div>
-            <div style="background-color: #e8f4f8; padding: 20px; border-radius: 10px; text-align: center;">
-                <p><em>Exemple : Vous tapez un texte, l'ordinateur le traite, le sauvegarde, puis l'imprime.</em></p>
-            </div>
-        </div>
-        <div class="footer-note">Slide 3 / 10</div>
-    </div>
+        function updateNetworkLines() {
+            svg.innerHTML = '';
+            const viewRect = viewport.getBoundingClientRect();
+            const coreRect = anchorCore.getBoundingClientRect();
+            
+            const cx = (coreRect.left + coreRect.width / 2) - viewRect.left;
+            const cy = (coreRect.top + coreRect.height / 2) - viewRect.top;
 
-    <!-- SLIDE 4 : Matériel vs Logiciel -->
-    <div class="slide">
-        <h2>Matériel (Hardware) vs Logiciel (Software)</h2>
-        <div class="grid-2" style="align-items: stretch;">
-            <div style="background: #ecf0f1; padding: 30px; border-radius: 12px;">
-                <h3>⚙️ Hardware (Matériel)</h3>
-                <p>Ce sont toutes les <strong>pièces physiques</strong> et tangibles de l'ordinateur (celles que l'on peut toucher).</p>
-                <p><em>Exemple : L'écran, le clavier, la carte mère.</em></p>
-            </div>
-            <div style="background: #eaf2f8; padding: 30px; border-radius: 12px;">
-                <h3>💻 Software (Logiciel)</h3>
-                <p>Ce sont les <strong>programmes et applications</strong> immatériels qui donnent les instructions.</p>
-                <p><em>Exemple : Windows, Word, Google Chrome.</em></p>
-            </div>
-        </div>
-        <p style="text-align: center; margin-top: 30px; font-weight: bold; color: #c0392b;">Le logiciel permet au matériel d'exécuter des tâches. Sans logiciel, le matériel est inerte !</p>
-        <div class="footer-note">Slide 4 / 10</div>
-    </div>
+            cards.forEach(card => {
+                const cardRect = card.getBoundingClientRect();
+                const nx = (cardRect.left + cardRect.width / 2) - viewRect.left;
+                const ny = (cardRect.top + cardRect.height / 2) - viewRect.top;
 
-    <!-- SLIDE 5 : Hardware - CPU -->
-    <div class="slide">
-        <h2>Le Processeur (CPU)</h2>
-        <div class="grid-2">
-            <div>
-                <p><strong>Rôle :</strong> C'est le <strong>« cerveau »</strong> de l'ordinateur.</p>
-                <p>Il est chargé d'exécuter toutes les tâches, de traiter l'information et de faire les calculs mathématiques complexes très rapidement.</p>
-                <p><em>Plus un processeur est puissant, plus l'ordinateur réfléchit et agit vite.</em></p>
-            </div>
-            <div style="text-align: center;">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/13449909490244683849_0" alt="CPU réel" class="hardware-img">
-            </div>
-        </div>
-        <div class="footer-note">Slide 5 / 10</div>
-    </div>
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', cx);
+                line.setAttribute('y1', cy);
+                line.setAttribute('x2', nx);
+                line.setAttribute('y2', ny);
+                line.setAttribute('class', 'heart-line');
+                
+                svg.appendChild(line);
+            });
+        }
 
-    <!-- SLIDE 6 : Hardware - RAM -->
-    <div class="slide">
-        <h2>La Mémoire Vive (RAM)</h2>
-        <div class="grid-2">
-            <div>
-                <p><strong>Rôle :</strong> C'est la <strong>mémoire à court terme</strong> (ou espace de travail).</p>
-                <p>Elle temporise les données des logiciels actuellement ouverts. Dès que l'ordinateur s'éteint, elle se vide complètement.</p>
-                <p><em>Avoir beaucoup de RAM permet d'ouvrir plusieurs applications en même temps sans ralentissement.</em></p>
-            </div>
-            <div style="text-align: center;">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/9385020917603882053_0" alt="RAM réelle" class="hardware-img">
-            </div>
-        </div>
-        <div class="footer-note">Slide 6 / 10</div>
-    </div>
+        let particles = [];
+        let particleCount = window.innerWidth < 600 ? 35 : 65;
 
-    <!-- SLIDE 7 : Hardware - Stockage -->
-    <div class="slide">
-        <h2>Le Stockage (SSD / HDD)</h2>
-        <div class="grid-2">
-            <div>
-                <p><strong>Rôle :</strong> C'est la <strong>mémoire à long terme</strong>.</p>
-                <p>Le disque dur stocke de manière permanente le système d'exploitation, vos logiciels, vos photos et vos documents, même quand l'ordinateur est éteint.</p>
-                <p><em>Le SSD est la version moderne et ultra-rapide du disque dur classique (HDD).</em></p>
-            </div>
-            <div style="text-align: center;">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/18409040962161033026_0" alt="SSD réel" class="hardware-img">
-            </div>
-        </div>
-        <div class="footer-note">Slide 7 / 10</div>
-    </div>
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
 
-    <!-- SLIDE 8 : Hardware - Carte Mère -->
-    <div class="slide">
-        <h2>La Carte Mère</h2>
-        <div class="grid-2">
-            <div>
-                <p><strong>Rôle :</strong> C'est la <strong>colonne vertébrale</strong> de l'ordinateur.</p>
-                <p>C'est un grand circuit imprimé sur lequel tous les autres composants (CPU, RAM, Disque, carte graphique) viennent se brancher pour communiquer entre eux.</p>
-            </div>
-            <div style="text-align: center;">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/13621427611602160694_0" alt="Carte Mère réelle" class="hardware-img">
-            </div>
-        </div>
-        <div class="footer-note">Slide 8 / 10</div>
-    </div>
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height + canvas.height;
+                this.size = Math.random() * 3 + 0.5;
+                this.speedY = Math.random() * -1.0 - 0.3;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.alpha = Math.random() * 0.6 + 0.2;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                if (this.y < 0) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = '#ff2a5f';
+                ctx.fillStyle = 'rgba(255, 120, 160, 0.8)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
 
-    <!-- SLIDE 9 : Réseaux -->
-    <div class="slide">
-        <h2>La Communication et les Réseaux</h2>
-        <p>Les ordinateurs ne travaillent plus seuls, ils sont connectés :</p>
-        <ul>
-            <li>🌐 <strong>Réseau :</strong> Ensemble d'appareils reliés pour échanger des données.</li>
-            <li>🌍 <strong>Internet :</strong> Le réseau mondial de communication.</li>
-            <li>📶 <strong>Wi-Fi :</strong> Connexion sans fil à domicile ou au travail.</li>
-            <li>📡 <strong>Routeur :</strong> L'appareil qui reçoit internet et le distribue à vos appareils.</li>
-        </ul>
-        <div style="margin-top: 30px; padding: 20px; border-left: 6px solid #f39c12; background: #fcf3cf; border-radius: 0 10px 10px 0;">
-            <p style="margin: 0;">⚠️ <strong>Sécurité :</strong> Ne partagez pas vos mots de passe, utilisez des réseaux fiables et maintenez vos appareils à jour.</p>
-        </div>
-        <div class="footer-note">Slide 9 / 10</div>
-    </div>
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                let p = new Particle();
+                p.y = Math.random() * canvas.height;
+                particles.push(p);
+            }
+        }
 
-    <!-- SLIDE 10 : Conclusion -->
-    <div class="slide">
-        <h2>Résumé et Conclusion</h2>
-        <p>Pour faire simple, voici ce qu'il faut retenir :</p>
-        <ul>
-            <li>Les ordinateurs <strong>saisissent, traitent, stockent et restituent</strong> l'information.</li>
-            <li>Ils sont composés d'un <strong>matériel (Hardware)</strong> physique animé par un <strong>logiciel (Software)</strong> immatériel.</li>
-            <li>Chaque composant a un rôle clé : le CPU calcule, la RAM assiste temporairement, le SSD sauvegarde.</li>
-            <li>Ils communiquent avec le reste du monde via des <strong>réseaux (Wi-Fi, Internet)</strong>.</li>
-        </ul>
-        <div style="text-align: center; margin-top: 40px;">
-            <h3 style="color: #27ae60;">Merci de votre attention ! Avez-vous des questions ?</h3>
-        </div>
-        <div class="footer-note">Slide 10 / 10</div>
-    </div>
+        function renderLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            updateNetworkLines();
+            requestAnimationFrame(renderLoop);
+        }
 
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            particleCount = window.innerWidth < 600 ? 35 : 65;
+            updateNetworkLines();
+        });
+
+        resizeCanvas();
+        initParticles();
+        requestAnimationFrame(renderLoop);
+    </script>
 </body>
 </html>
